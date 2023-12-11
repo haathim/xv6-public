@@ -102,3 +102,30 @@ sys_getmysize(void)
 {
   return myproc()->sz;
 }
+
+int
+sys_getkernelendaddr(void)
+{
+  return (int)(KERNBASE + PHYSTOP);
+}
+
+int
+sys_getkernelstartaddr(void)
+{
+  return (int)(KERNBASE);
+}
+
+int
+sys_getkernelvariaddr(void)
+{
+  int var = 7;
+  // int* add = &var;
+  // return (int)add;
+  return (int)&var;
+}
+
+int
+sys_getsystemcalladdr(void)
+{
+  return (int)sys_fork;
+}

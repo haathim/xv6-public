@@ -105,6 +105,10 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_getyear(void);
 extern int sys_getmysize(void);
+extern int sys_getkernelendaddr(void);
+extern int sys_getkernelstartaddr(void);
+extern int sys_getsystemcalladdr(void);
+extern int sys_getkernelvariaddr(void);
 
 // array of function pointers used for the syscalls including their index in the array
 // most of the syscalls are defined in sysfile.c & sysproc.c
@@ -132,6 +136,10 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_getyear] sys_getyear,
 [SYS_getmysize] sys_getmysize,
+[SYS_getkernelstartaddr] sys_getkernelstartaddr,
+[SYS_getkernelendaddr] sys_getkernelendaddr,
+[SYS_getkernelvariaddr] sys_getkernelvariaddr,
+[SYS_getsystemcalladdr] sys_getsystemcalladdr,
 };
 
 void

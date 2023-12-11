@@ -109,6 +109,7 @@ extern int sys_getkernelendaddr(void);
 extern int sys_getkernelstartaddr(void);
 extern int sys_getsystemcalladdr(void);
 extern int sys_getkernelvariaddr(void);
+extern int sys_setpriority(void);
 
 // array of function pointers used for the syscalls including their index in the array
 // most of the syscalls are defined in sysfile.c & sysproc.c
@@ -140,6 +141,7 @@ static int (*syscalls[])(void) = {
 [SYS_getkernelendaddr] sys_getkernelendaddr,
 [SYS_getkernelvariaddr] sys_getkernelvariaddr,
 [SYS_getsystemcalladdr] sys_getsystemcalladdr,
+[SYS_setpriority] sys_setpriority,
 };
 
 void

@@ -119,13 +119,23 @@ int
 sys_getkernelvariaddr(void)
 {
   int var = 7;
-  // int* add = &var;
-  // return (int)add;
-  return (int)&var;
+  int* add = &var;
+  return (int)add;
+  // return (int)&var;
 }
 
 int
 sys_getsystemcalladdr(void)
 {
   return (int)sys_fork;
+}
+
+int
+sys_setpriority()
+{
+  int priority;
+  argint(0, &priority);
+  myproc()->priority = priority;
+
+  return priority;
 }

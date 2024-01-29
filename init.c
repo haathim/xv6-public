@@ -16,8 +16,25 @@ main(void)
     mknod("console", 1, 1);
     open("console", O_RDWR);
   }
+
   dup(0);  // stdout
   dup(0);  // stderr
+
+  pid = fork();
+  if(pid < 0){
+    printf(1, "init: fork failed\n");
+    exit();
+  }
+
+  if(pid == 0){
+      exec("myprog", argv);
+  }
+
+
+  dup(0);  // stdout
+  dup(0);  // stderr
+
+  
 
   for(;;){
     printf(1, "init: starting sh\n");

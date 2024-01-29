@@ -20,7 +20,14 @@ int main(void){
     // // below line should never work
     // printf (1, "I ’m running with priority 2 \n");
 
-    printf (1, "Size of a given inode: %d \n", getinodesize("home/ucsc"));
+    // printf (1, "Size of a given inode: %d \n", getinodesize("home/ucsc"));
 
+    printf(1, "Background service started....\n");
+    while (1)
+    {
+        sleep(5);
+        printf(1, "Hello from the background process..\n");
+    }
+    
     exit();
 }

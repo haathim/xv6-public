@@ -6,6 +6,13 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "spinlock.h"
+
+
+// extern struct {
+//   struct spinlock lock;
+//   struct proc proc[NPROC];
+// } ptable;
 
 int
 sys_fork(void)
@@ -138,4 +145,69 @@ sys_setpriority()
   myproc()->priority = priority;
 
   return priority;
+}
+
+int
+sys_mycall(void)
+{
+    // struct proc* procptr = getPTable();
+
+    struct proc* proc = getPTable();
+
+    static char *states[] = {
+      [UNUSED]    "UNUSED",
+      [EMBRYO]    "EMBRYO",
+      [SLEEPING]  "SLEEPING ",
+      [RUNNABLE]  "RUNNABLE",
+      [RUNNING]   "RUNNING",
+      [ZOMBIE]    "ZOMBIE"
+    };
+
+    int i;
+    struct proc *p;
+    char *state;
+
+    int size;
+    char *buf;
+    char *s;
+
+    if (argint(0, &size) <0){
+        return -1;
+    }
+
+    if (argptr(1, &buf,size) <0){
+        return -1;
+    }
+
+    s = buf;
+
+    for(p = proc; p < &proc[NPROC] && (buf + size > s); p++){
+      if(p->state == UNUSED)
+        continue;
+      if(p->state >= 0 && p->state < NELEM(states) && states[p->state])
+        state = states[p->state];
+      else
+        state = "???";
+      
+      *(int *)s = p->pid;
+      s+=4;
+
+      i = 0;
+
+      while ((s[i] = state[i]) && i < 15){
+        i++;
+      }
+
+      s+=16;
+
+      i=0;
+      while ((s[i] = p->name[i]) && i < 15){
+        i++;
+      }
+
+      s+=16;
+
+    }
+
+    return 1;
 }

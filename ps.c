@@ -26,7 +26,7 @@ int main(void) {
         p++;
     }
 
-    // printf(1, "Program %d \n", return_val);
+    printf(1, "Program %d \n", return_val);
     exit();
 }
 
